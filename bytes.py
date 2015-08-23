@@ -4,10 +4,12 @@ bytes.py - Byte conversion module for Sopel
 Copyright © 2015, Richard Petrie, <rap1011@ksu.edu>
 Licensed under The MIT License
 """
-from sopel.module import commands, example
+from sopel.module import commands, example, NOLIMIT
+import re
 
 ORDER_BYTES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
+find_input = re.compile('(^\d+)\s*([bkmgtpezy]*)', re.IGNORECASE)
 
 @commands('bytes')
 @example('2048', '2048 B = 2 KB')
@@ -17,11 +19,14 @@ def do_bytes(bot, trigger):
     """
     Handles input and 'says' the list of conversions
     """
-    inp = trigger.group(2).split()
-    number = inp[0]
-    unit = None
-    if len(inp) > 1:
-        unit = inp[1]
+    user_input = find_input.match(trigger.group(2)).groups()
+    if not user_input:
+        bot.reply("No arguments given")
+        return NOLIMIT
+    if len(user_input) > 2:
+        bot.reply("Too many arguments")
+    number = user_input[0]
+    unit = user_input[1]
     response = convert_bytes(bot, number, unit)
     new_response = ''
     for elem in response:
