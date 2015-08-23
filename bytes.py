@@ -1,9 +1,9 @@
 # coding=utf8
-'''
+"""
 bytes.py - Byte conversion module for Sopel
 Copyright © 2015, Richard Petrie, <rap1011@ksu.edu>
 Licensed under The MIT License
-'''
+"""
 from sopel.module import commands, example
 
 ORDER_BYTES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -14,6 +14,9 @@ ORDER_BYTES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 @example('160 KB', '163840 B = 160 KB = 0.156 MB')
 @example('160 Kb', '20480 B = 20 KB')
 def do_bytes(bot, trigger):
+    """
+    Handles input and 'says' the list of conversions
+    """
     inp = trigger.group(2).split()
     number = inp[0]
     unit = None
@@ -29,6 +32,13 @@ def do_bytes(bot, trigger):
 
 
 def convert_bytes(bot, number, unit):
+    """
+    Does the conversion
+    :param bot: So the bot can give error messages
+    :param number: Number of bytes
+    :param unit: Unit given (or None)
+    :return: A list of strings with bytes and units
+    """
     if not unit:
         unit = "B"
     response = []
