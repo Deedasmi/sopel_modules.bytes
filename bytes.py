@@ -1,10 +1,17 @@
-__author__ = 'Deedasmi'
+'''
+bytes.py - Byte conversion module for Sopel
+Copyright © 2015, Richard Petrie, <rap1011@ksu.edu>
+Licensed under The MIT License
+'''
 from sopel.module import commands, example
 
 ORDER_BYTES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
 
 @commands('bytes')
+@example('2048', '2048 B = 2 KB')
+@example('160 KB', '163840 B = 160 KB = 0.156 MB')
+@example('160 Kb', '20480 B = 20 KB')
 def do_bytes(bot, trigger):
     inp = trigger.group(2).split()
     number = inp[0]
@@ -17,7 +24,7 @@ def do_bytes(bot, trigger):
         if elem[0:3] != '0.0':
             new_response += elem + ' = '
     new_response = new_response.replace(".0", "")[:-2]
-    bot.reply(new_response)
+    bot.say(new_response)
 
 
 def convert_bytes(bot, number, unit):
