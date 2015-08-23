@@ -1,6 +1,7 @@
+# coding=utf8
 '''
 bytes.py - Byte conversion module for Sopel
-Copyright © 2015, Richard Petrie, <rap1011@ksu.edu>
+Copyright Â© 2015, Richard Petrie, <rap1011@ksu.edu>
 Licensed under The MIT License
 '''
 from sopel.module import commands, example
