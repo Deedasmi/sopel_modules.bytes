@@ -2,8 +2,9 @@
 """
 bytes.py - Byte conversion module for Sopel
 Copyright © 2015, Richard Petrie, <rap1011@ksu.edu>
-Licensed under The MIT License
+Licensed Eiffel Forum License, version 2
 """
+from __future__ import unicode_literals
 from sopel.module import commands, example, NOLIMIT
 import re
 
