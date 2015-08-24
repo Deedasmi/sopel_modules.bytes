@@ -10,7 +10,7 @@ import re
 
 ORDER_BYTES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
-FIND_INPUT = re.compile(r'(^\d+)\s*([bkmgtpezy]*)', re.IGNORECASE)
+FIND_INPUT = re.compile(r'(^\d*\.?\d+)\s*([bkmgtpezy]*)', re.IGNORECASE)
 
 
 @commands('bytes')
