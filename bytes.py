@@ -17,6 +17,7 @@ FIND_INPUT = re.compile(r'(^\d*\.?\d+)\s*([bkmgtpezy]*)', re.IGNORECASE)
 @example('2048', '2048 B = 2 KB')
 @example('160 KB', '163840 B = 160 KB = 0.156 MB')
 @example('160 Kb', '20480 B = 20 KB')
+@example('.5 MB', '524288 B = 512 KB = 0.5 MB')
 def do_bytes(bot, trigger):
     """
     Handles input and 'says' the list of conversions
