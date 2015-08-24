@@ -22,46 +22,40 @@ def do_bytes(bot, trigger):
     """
     Handles input and 'says' the list of conversions
     """
+    # Take and parse input
     user_input = FIND_INPUT.match(trigger.group(2))
     if not user_input:
         bot.reply("Invalid or missing arguments")
         return NOLIMIT
-    number = user_input.group(1)
+    number = float(user_input.group(1))
     unit = user_input.group(2)
-    response = convert_bytes(bot, number, unit)
-    new_response = ''
-    for elem in response:
-        if elem[0:3] != '0.0':
-            new_response += elem + ' = '
-    new_response = new_response.replace(".0", "")[:-2]
-    bot.say(new_response)
 
+    # Handle bits
+    if 'b' in unit and unit.upper() in ORDER_BYTES:
+        number /= 8
+        unit = unit.upper()
 
-def convert_bytes(bot, number, unit):
-    """
-    Does the conversion
-    :param bot: So the bot can give error messages
-    :param number: Number of bytes
-    :param unit: Unit given (or None)
-    :return: A list of strings with bytes and units
-    """
+    # Validate input
     if not unit:
         unit = "B"
+    if unit not in ORDER_BYTES:
+        bot.reply("Invalid unit")
+        return NOLIMIT
+
+    bot.say(convert_bytes(number, unit))
+
+
+def convert_bytes(num_bytes, sent_unit):
+    """
+    Does the conversion
+    :param num_bytes: Number of bytes
+    :param sent_unit: Unit given
+    :return: A string with bytes and units
+    """
     response = []
-    num_bytes = float(number)
-    if unit in ORDER_BYTES or unit.upper() in ORDER_BYTES:
-        if 'b' in unit:
-            if num_bytes % 8 != 0:
-                bot.reply('Invalid number of bits')
-                exit()
-            else:
-                num_bytes /= 8
-                unit = unit.upper()
-        sent_type = ORDER_BYTES.index(unit)
-        num_bytes *= (1024 ** sent_type)
-    else:
-        bot.reply('Unknown type')
-        exit()
-    for size in ORDER_BYTES:
-        response.append(str(round(num_bytes / (1024 ** ORDER_BYTES.index(size)), 3)) + " " + size)
-    return response
+    num_bytes *= (1024 ** ORDER_BYTES.index(sent_unit))
+    for unit in ORDER_BYTES:
+        size = round(num_bytes / (1024 ** ORDER_BYTES.index(unit)), 3)
+        if size >= 0.01:
+            response.append(str(size).replace(".0", "") + " " + unit + " = ")
+    return response[:-2]  # Cut off last "= "
