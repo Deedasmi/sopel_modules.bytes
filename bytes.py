@@ -19,12 +19,14 @@ def do_bytes(bot, trigger):
     """
     Handles input and 'says' the list of conversions
     """
-    user_input = find_input.match(trigger.group(2)).groups()
+    user_input = find_input.match(trigger.group(2))
     if not user_input:
-        bot.reply("No arguments given")
+        bot.reply("Invalid or missing arguments")
         return NOLIMIT
+    user_input = user_input.groups()
     if len(user_input) > 2:
         bot.reply("Too many arguments")
+        return NOLIMIT
     number = user_input[0]
     unit = user_input[1]
     response = convert_bytes(bot, number, unit)
@@ -52,7 +54,7 @@ def convert_bytes(bot, number, unit):
         if 'b' in unit:
             if num_bytes % 8 != 0:
                 bot.reply('Invalid number of bits')
-                exit()
+                return NOLIMIT
             else:
                 num_bytes /= 8
                 unit = unit.upper()
@@ -60,7 +62,7 @@ def convert_bytes(bot, number, unit):
         num_bytes *= (1024 ** sent_type)
     else:
         bot.reply('Unknown type')
-        exit()
+        return NOLIMIT
     for size in ORDER_BYTES:
         response.append(str(round(num_bytes / (1024 ** ORDER_BYTES.index(size)), 3)) + " " + size)
     return response
