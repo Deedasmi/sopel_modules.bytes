@@ -57,5 +57,5 @@ def convert_bytes(num_bytes, sent_unit):
     for unit in ORDER_BYTES:
         size = num_bytes / (1024 ** ORDER_BYTES.index(unit))
         if size >= 0.01:
-            response += ("{0:.2f} {1} = ".format(size, unit)).replace(".00", "")
+            response += ("{0:.3f} {1} = ".format(size, unit)).replace(".000", "")
     return response[:-2]  # Cut off last "= "
