@@ -9,7 +9,8 @@ import re
 
 ORDER_BYTES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
-find_input = re.compile('(^\d+)\s*([bkmgtpezy]*)', re.IGNORECASE)
+FIND_INPUT = re.compile(r'(^\d+)\s*([bkmgtpezy]*)', re.IGNORECASE)
+
 
 @commands('bytes')
 @example('2048', '2048 B = 2 KB')
@@ -19,7 +20,7 @@ def do_bytes(bot, trigger):
     """
     Handles input and 'says' the list of conversions
     """
-    user_input = find_input.match(trigger.group(2))
+    user_input = FIND_INPUT.match(trigger.group(2))
     if not user_input:
         bot.reply("Invalid or missing arguments")
         return NOLIMIT
