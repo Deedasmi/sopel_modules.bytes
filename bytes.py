@@ -47,7 +47,7 @@ def convert_bytes(bot, number, unit):
     if not unit:
         unit = "B"
     response = []
-    num_bytes = int(number)
+    num_bytes = float(number)
     if unit in ORDER_BYTES or unit.upper() in ORDER_BYTES:
         if 'b' in unit:
             if num_bytes % 8 != 0:
