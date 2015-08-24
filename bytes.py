@@ -23,12 +23,8 @@ def do_bytes(bot, trigger):
     if not user_input:
         bot.reply("Invalid or missing arguments")
         return NOLIMIT
-    user_input = user_input.groups()
-    if len(user_input) > 2:
-        bot.reply("Too many arguments")
-        return NOLIMIT
-    number = user_input[0]
-    unit = user_input[1]
+    number = user_input.group(1)
+    unit = user_input.group(2)
     response = convert_bytes(bot, number, unit)
     new_response = ''
     for elem in response:
@@ -54,7 +50,7 @@ def convert_bytes(bot, number, unit):
         if 'b' in unit:
             if num_bytes % 8 != 0:
                 bot.reply('Invalid number of bits')
-                return NOLIMIT
+                exit()
             else:
                 num_bytes /= 8
                 unit = unit.upper()
@@ -62,7 +58,7 @@ def convert_bytes(bot, number, unit):
         num_bytes *= (1024 ** sent_type)
     else:
         bot.reply('Unknown type')
-        return NOLIMIT
+        exit()
     for size in ORDER_BYTES:
         response.append(str(round(num_bytes / (1024 ** ORDER_BYTES.index(size)), 3)) + " " + size)
     return response
