@@ -13,7 +13,7 @@ Byte conversion module for Sopel
 
 # Usage
 
-```.bytes *num_bytes [Units]*```
+.bytes *num_bytes [Units]*
 
 Valid units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'], or use lower case b for bits instead of bytes.
 
