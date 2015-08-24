@@ -52,10 +52,10 @@ def convert_bytes(num_bytes, sent_unit):
     :param sent_unit: Unit given
     :return: A string with bytes and units
     """
-    response = []
+    response = ''
     num_bytes *= (1024 ** ORDER_BYTES.index(sent_unit))
     for unit in ORDER_BYTES:
         size = round(num_bytes / (1024 ** ORDER_BYTES.index(unit)), 3)
         if size >= 0.01:
-            response.append(str(size).replace(".0", "") + " " + unit + " = ")
+            response += (str(size).replace(".0", "") + " " + unit + " = ")
     return response[:-2]  # Cut off last "= "
