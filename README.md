@@ -3,8 +3,6 @@ Byte conversion module for Sopel
 
 # Installation
 1. ```git clone https://github.com/Deedasmi/sopel_modules.bytes.git```
- OR
- download from PyPi/pip
 
 2. Place this folder in .sopel/modules/ (or wherever you store modules)
 
